@@ -1,0 +1,30 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.2"
+          cache: "pip"
+
+      - name: Install pip-tools
+        run: python -m pip install pip-tools
+
+      - name: Install dependencies
+        run: pip-sync
+
+      - name: Install pre-commit hooks
+        run: pre-commit install
+
+      - name: Run pre-commit
+        run: pre-commit run --all-files
