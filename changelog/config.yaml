@@ -1,0 +1,9 @@
+types:
+  feat: "Features"
+  fix: "Bug Fixes"
+  chore: "Miscellaneous"
+scopes:
+  build: []
+  ci: []
+  cd: []
+  docs: []
