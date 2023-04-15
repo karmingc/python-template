@@ -1,12 +1,17 @@
 name: Tests
 
 on:
-  pull_request:
-  push:
-    branches: ["main"]
-
+  workflow_call:
+    inputs:
+      skip:
+        required: false
+        description: "Skip the changelog comment"
+        type: boolean
+        default: false
 jobs:
   tests:
+    name: Tests
+    if: ${{ !inputs.skip }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

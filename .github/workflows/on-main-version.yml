@@ -1,0 +1,30 @@
+# Fires only .version is modified. See
+# https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+# for more information.
+
+name: On main
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**" # skip all files
+      - "!.version" # …except if only this file changes and nothing else.
+
+jobs:
+  version-modified:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo version has been modified
+        run: |
+          echo "Version has been modified"
+
+  release:
+    name: Release
+    uses: ./.github/workflows/release.yml
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: read
+    secrets: inherit
