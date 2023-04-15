@@ -1,0 +1,4 @@
+changes:
+- type: fix
+  scope: ci
+  description: Use GH_TOKEN instead of GITHUB_TOKEN
