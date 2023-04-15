@@ -18,3 +18,9 @@ jobs:
       base-ref: origin/${{ github.base_ref }}
       pr-number: ${{ github.event.pull_request.number }}
       skip: true
+
+  tests:
+    name: Tests
+    uses: ./.github/workflows/tests.yml
+    with:
+      skip: true
