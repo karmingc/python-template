@@ -1,4 +1,0 @@
-changes:
-- type: feat
-  scope: ci
-  description: Adding makefile for changelog and versioning process. Inspired from pulumi repo.

@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.0.7 (2023-04-15)
+
+
+### Features
+
+- [ci] Adding makefile for changelog and versioning process. Inspired from pulumi repo.
+  [#5](https://github.com/pulumi/pulumi/pull/5)
+
+- [ci] Add CI for releases
+  [#6](https://github.com/pulumi/pulumi/pull/6)
+
+
+### Bug Fixes
+
+- [ci] Fix ancestor with depth
+  [#12](https://github.com/pulumi/pulumi/pull/12)
+
+- [ci] fix ci with outdated branch
+  [#10](https://github.com/pulumi/pulumi/pull/10)
+
+- [ci] Use GH_TOKEN instead of GITHUB_TOKEN
+  [#8](https://github.com/pulumi/pulumi/pull/8)
+
 Versions follow [Semantic Versioning](https://semver.org/).
 
 ## 0.0.4 / 2023-04-09

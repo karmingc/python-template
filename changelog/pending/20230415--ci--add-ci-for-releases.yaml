@@ -1,4 +1,0 @@
-changes:
-- type: feat
-  scope: ci
-  description: Add CI for releases
