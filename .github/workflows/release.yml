@@ -1,0 +1,67 @@
+# This workflow is based on code from https://github.com/pulumi/pulumi
+# Copyright 2023 karmingc
+# Licensed under the Apache License, Version 2.0
+# http://www.apache.org/licenses/LICENSE-2.0
+
+name: Release
+
+permissions:
+  # To create a PR
+  contents: write
+  pull-requests: write
+  repository-projects: read
+
+on:
+  workflow_call:
+
+jobs:
+  release:
+    name: Update changelog and create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ">=1.19.0" # decoupled from version sets, only used by changelog tool
+
+      - name: Update changelog and create release
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEEN }}
+        run: |
+          set -euo pipefail
+
+          VERSION="$(./.github/scripts/get-version)"
+
+          git switch --create "release/v${VERSION}"
+
+          PREVIOUS_VERSION="$(./.github/scripts/get-previous-version)"
+          RELEASE_NOTES="$(./.github/scripts/get-changelog "${PREVIOUS_VERSION}" --version ${VERSION})"
+
+          echo -en "# Changelog\n\n${RELEASE_NOTES}\n\n$(tail -n+3 CHANGELOG.md)" > ./CHANGELOG.md
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          rm ./changelog/pending/*.yaml || true
+
+          git add CHANGELOG.md changelog
+          git commit -m "chore: changelog for v${VERSION}"
+
+          # Publish tag
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}"
+          git push -u origin HEAD
+
+          # Create PR
+          gh pr create \
+            --title "Changelog updates for v${VERSION}" \
+            --body "Automatic PR generated for v${VERSION}"
+
+          # Create release
+          gh release create "v${VERSION}" --title "v${VERSION}" --notes "${RELEASE_NOTES}"

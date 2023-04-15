@@ -1,0 +1,69 @@
+name: PR Changelog
+
+permissions:
+  # To add and edit comments on PRs
+  contents: read
+  pull-requests: write
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        description: "GitHub ref to use, must be the merge ref of the pull request"
+        type: string
+      base-ref:
+        required: true
+        description: "GitHub base ref, the base ref of the pull request"
+        type: string
+      pr-number:
+        required: true
+        description: "PR number to use"
+        type: string
+      skip:
+        required: false
+        description: "Skip the changelog comment"
+        type: boolean
+        default: false
+
+jobs:
+  changelog-comment:
+    name: Changelog comment
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ">=1.19.0" # decoupled from version sets, only used by changelog tool
+      - name: Changelog
+        id: changelog
+        env:
+          GITHUB_PR: ${{ inputs.pr-number }}
+          PREVIOUS_VERSION: ${{ inputs.base-ref }}
+        run: |
+          CHANGELOG="$(./.github/scripts/get-changelog-comment "${PREVIOUS_VERSION}" "true" "${GITHUB_PR}")"
+          ./.github/scripts/set-output CHANGELOG "${CHANGELOG}"
+      - name: Find comment
+        uses: peter-evans/find-comment@v2.3.0
+        id: find_comment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ inputs.pr-number }}
+          body-includes: "# Changelog"
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          issue-number: ${{ inputs.pr-number }}
+          body: |
+            # Changelog
+
+            ${{ fromJSON(steps.changelog.outputs.CHANGELOG) }}
+          edit-mode: replace

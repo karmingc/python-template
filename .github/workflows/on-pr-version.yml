@@ -1,0 +1,26 @@
+name: On PR version
+
+on:
+  pull_request:
+    paths-ignore:
+      - "**" # Skip all files…
+      - "!.version" # …except if only this file changes and nothing else.
+
+jobs:
+  changelog-comment:
+    name: Changelog comment
+    uses: ./.github/workflows/changelog-comment.yml
+    permissions:
+      contents: read
+      pull-requests: write
+    with:
+      ref: ${{ github.ref }}
+      base-ref: origin/${{ github.base_ref }}
+      pr-number: ${{ github.event.pull_request.number }}
+      skip: true
+
+  tests:
+    name: Tests
+    uses: ./.github/workflows/tests.yml
+    with:
+      skip: true

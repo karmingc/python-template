@@ -1,0 +1,24 @@
+name: On PR
+
+on:
+  pull_request:
+    paths-ignore:
+      - ".version"
+
+jobs:
+  changelog-comment:
+    name: Changelog comment
+    uses: ./.github/workflows/changelog-comment.yml
+    permissions:
+      contents: read
+      pull-requests: write
+    with:
+      ref: ${{ github.ref }}
+      base-ref: origin/${{ github.base_ref }}
+      pr-number: ${{ github.event.pull_request.number }}
+      skip: ${{ startsWith(github.head_ref, 'release/') }}
+    secrets: inherit
+
+  tests:
+    name: Tests
+    uses: ./.github/workflows/tests.yml
