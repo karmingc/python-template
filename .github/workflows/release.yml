@@ -32,7 +32,7 @@ jobs:
       - name: Update changelog and create release
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEEN }}
         run: |
           set -euo pipefail
 
