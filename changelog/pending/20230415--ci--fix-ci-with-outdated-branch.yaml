@@ -1,0 +1,4 @@
+changes:
+- type: fix
+  scope: ci
+  description: fix ci with outdated branch
