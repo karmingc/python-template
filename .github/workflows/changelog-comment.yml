@@ -8,6 +8,10 @@ permissions:
 on:
   workflow_call:
     inputs:
+      repository:
+        required: true
+        description: "GitHub repository"
+        type: string
       ref:
         required: true
         description: "GitHub ref to use, must be the merge ref of the pull request"
@@ -32,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !inputs.skip }}
     env:
+      GITHUB_REPOSITORY: ${{ inputs.repository }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3

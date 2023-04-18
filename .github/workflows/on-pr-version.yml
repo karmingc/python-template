@@ -14,6 +14,7 @@ jobs:
       contents: read
       pull-requests: write
     with:
+      repository: ${{ github.repository }}
       ref: ${{ github.ref }}
       base-ref: origin/${{ github.base_ref }}
       pr-number: ${{ github.event.pull_request.number }}
