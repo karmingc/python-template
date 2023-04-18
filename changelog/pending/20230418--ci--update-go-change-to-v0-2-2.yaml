@@ -1,0 +1,4 @@
+changes:
+- type: feat
+  scope: ci
+  description: Update go-change to v0.2.2.
