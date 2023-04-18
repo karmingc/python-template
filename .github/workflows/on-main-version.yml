@@ -27,4 +27,6 @@ jobs:
       contents: write
       pull-requests: write
       repository-projects: read
+    with:
+      repository: ${{ github.repository }}
     secrets: inherit
