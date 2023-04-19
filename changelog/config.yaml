@@ -1,6 +1,6 @@
 types:
   major: "Major: Breaking Changes"
-  minor: "Minor: Backwards Compatible Changes"
+  minor: "Minor: Backward Compatible Changes"
   patch: "Patch: Bug Fixes"
 scopes:
   feat:
