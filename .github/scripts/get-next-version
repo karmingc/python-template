@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+major=0
+minor=0
+patch=0
+
+for file in ./changelog/pending/*.yaml; do
+  types=$(yq eval '.changes[].type' "$file")
+  if [[ $types == "major" ]]; then
+    major=$((major + 1))
+  elif [[ $types == "minor" ]]; then
+    minor=$((minor + 1))
+  elif [[ $types == "patch" ]]; then
+    patch=$((patch + 1))
+  fi
+done
+
+# echo "Within ./changelog/pending folder, there are $major major, $minor minor, and $patch patch changes."
+version=$(./.github/scripts/get-version)
+
+if [[ $major -gt 0 ]]; then
+    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$1++; print}')
+elif [[ $minor -gt 0 ]]; then
+    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$2++; print}')
+else
+    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$3++; print}')
+fi
+
+echo "$new_version"
