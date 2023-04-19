@@ -32,4 +32,9 @@ fi
 
 >&2 echo "::debug::Merge base ${MERGE_BASE}"
 
-go run github.com/aaronfriel/go-change@v0.1.2 render --filter-since-commit "${MERGE_BASE}" "${@}"
+# Current workaround for running a forked version of go-change.
+# Can revisit once https://github.com/AaronFriel/go-change/pull/21 is merged.
+go mod init github.com/karmingc/python-template
+go mod edit -replace=github.com/aaronfriel/go-change=github.com/karmingc/go-change@v0.2.2
+go get github.com/aaronfriel/go-change
+go run github.com/aaronfriel/go-change render --filter-since-commit "${MERGE_BASE}" "${@}"
