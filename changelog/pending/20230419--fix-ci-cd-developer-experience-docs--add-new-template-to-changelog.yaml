@@ -1,4 +1,0 @@
-changes:
-- type: patch
-  scope: fix/developer experience,ci/cd,docs
-  description: Add new template to changelog.
