@@ -2,9 +2,9 @@
 changelog: ## Generates a changelog with the template under ./changelog/config.yaml.
 	go run github.com/aaronfriel/go-change@v0.1.2 create
 
-.PHONY: get-next-version
-get-next-version: ## Gets the next version based on the current version and the changelog.
-	./.github/scripts/get-next-version
+.PHONY: bump-version
+bump-version: ## Bump the .version file to the next version with ./.github/scripts/get-next-version
+	echo "$$(./.github/scripts/get-next-version)" > .version
 
 
 .PHONY: help
