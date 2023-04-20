@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.8 (2023-04-20)
+
+
+### Patch: Bug Fixes
+
+- [feat/{ci/cd,developer experience}] bump-version target to make it easier to determine next version.
+  [#20](https://github.com/pulumi/pulumi/pull/20)
+
 ## 0.1.7 (2023-04-20)
 
 

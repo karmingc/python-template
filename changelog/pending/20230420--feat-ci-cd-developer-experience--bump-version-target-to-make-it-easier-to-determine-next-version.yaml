@@ -1,4 +1,0 @@
-changes:
-- type: patch
-  scope: feat/developer experience,ci/cd
-  description: bump-version target to make it easier to determine next version.
