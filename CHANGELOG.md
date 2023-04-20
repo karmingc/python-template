@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.7 (2023-04-20)
+
+
+### Minor: Backward Compatible Changes
+
+- [fix/{ci/cd,developer experience,docs}] Update go-change to v0.2.2.
+  [#17](https://github.com/pulumi/pulumi/pull/17)
+  [#15](https://github.com/pulumi/pulumi/pull/15)
+
+
+### Patch: Bug Fixes
+
+- [fix/{ci/cd,developer experience,docs}] Add new template to changelog.
+  [#17](https://github.com/pulumi/pulumi/pull/17)
+
 ## 0.0.7 (2023-04-15)
 
 ### Features
