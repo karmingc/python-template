@@ -19,9 +19,9 @@ done
 version=$(./.github/scripts/get-version)
 
 if [[ $major -gt 0 ]]; then
-    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$1++; print}')
+    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$1++; $2=0; $3=0; print}')
 elif [[ $minor -gt 0 ]]; then
-    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$2++; print}')
+    new_version=$(echo "${version}" | awk -F. -v OFS=. '{$2++; $3=0; print}')
 else
     new_version=$(echo "${version}" | awk -F. -v OFS=. '{$3++; print}')
 fi
