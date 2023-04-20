@@ -1,9 +1,35 @@
 types:
-  feat: "Features"
-  fix: "Bug Fixes"
-  chore: "Miscellaneous"
+  major: "Major: Breaking Changes"
+  minor: "Minor: Backward Compatible Changes"
+  patch: "Patch: Bug Fixes"
 scopes:
-  build: []
-  ci: []
-  cd: []
-  docs: []
+  feat:
+    [
+      build,
+      developer experience,
+      application code,
+      ci/cd,
+      tests,
+      docs,
+      monitoring,
+    ]
+  fix:
+    [
+      build,
+      developer experience,
+      application code,
+      ci/cd,
+      tests,
+      docs,
+      monitoring,
+    ]
+  chore:
+    [
+      build,
+      developer experience,
+      application code,
+      ci/cd,
+      tests,
+      docs,
+      monitoring,
+    ]
