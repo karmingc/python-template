@@ -23,28 +23,3 @@ jobs:
   tests:
     name: Tests
     uses: ./.github/workflows/tests.yml
-
-  get-cl-entries:
-    name: Get changelog entries
-    runs-on: ubuntu-latest
-    outputs:
-      entries: ${{ steps.get-number-of-entries.outputs.entries }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Get number of entries
-        id: get-number-of-entries
-        run: |
-          number=$(ls -1 ./changelog/pending | wc -l)
-          echo "entries=${number}" >> $GITHUB_OUTPUT
-
-  bump-version-pr:
-    name: Bump version PR
-    needs: [get-cl-entries]
-    runs-on: ubuntu-latest
-    if: ${{ needs.get-cl-entries.outputs.entries >= 3 }}
-    steps:
-      - name: echo something
-        run: |
-          echo "${{ needs.get-cl-entries.outputs.entries }}"
