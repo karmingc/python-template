@@ -34,9 +34,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Get number of entries
+        id: get-number-of-entries
         run: |
           number=$(ls -1 ./changelog/pending | wc -l)
           echo "entries=${number}" >> $GITHUB_OUTPUT
+
   bump-version-pr:
     name: Bump version PR
     needs: [get-cl-entries]
