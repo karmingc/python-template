@@ -13,6 +13,11 @@ permissions:
 
 on:
   workflow_call:
+    inputs:
+      ref:
+        description: "GitHub ref to use"
+        type: string
+        required: true
 
 jobs:
   release:
@@ -21,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ inputs.ref }}
           fetch-depth: 0
 
       - uses: actions/setup-go@v3

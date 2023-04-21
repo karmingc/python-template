@@ -1,0 +1,35 @@
+name: On main
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".version" # all except if only this file changes and nothing else.
+
+jobs:
+  get-cl-entries:
+    name: Get changelog entries
+    runs-on: ubuntu-latest
+    outputs:
+      entries: ${{ steps.get-number-of-entries.outputs.entries }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get number of entries
+        run: |
+          number=$(ls ./changelog/entries | wc -l)
+          echo "entries=${number}" >> $GITHUB_OUTPUT
+
+  bump-version-pr:
+    name: Bump version PR
+    needs: [get-cl-entries]
+    if: ${{ needs.get-cl-entries.outputs.entries >= 3 }}
+    uses: ./.github/workflows/bump-version-pr.yml
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      ref: ${{ github.sha }}
+    secrets: inherit
