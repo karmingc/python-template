@@ -1,0 +1,53 @@
+name: Bump version PR
+
+permissions:
+  # To create a PR
+  contents: write
+  pull-requests: write
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "GitHub ref to use"
+        type: string
+        required: true
+
+jobs:
+  bump-version-pr:
+    name: Bump version PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ">=1.19.0" # decoupled from version sets, only used by changelog tool
+
+      - name: Install yq
+        run: |
+          go install github.com/mikefarah/yq/v4@latest
+
+      - name: Bump version and make PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          make bump-version
+          VERSION=$(cat .version)
+
+          git switch --create "bump/v${VERSION}"
+
+          git add .version
+          git commit -m "chore: bump version to v${VERSION}"
+
+          git push -u origin HEAD
+
+          # Create PR
+          gh pr create \
+            --title "Bump version to v${VERSION}" \
+            --body "Automatic PR generated to bump version to v${VERSION}"
