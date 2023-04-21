@@ -19,7 +19,7 @@ jobs:
 
       - name: Get number of entries
         run: |
-          number=$(ls ./changelog/entries | wc -l)
+          number=$(ls ./changelog/pending | wc -l)
           echo "entries=${number}" >> $GITHUB_OUTPUT
 
   bump-version-pr:
