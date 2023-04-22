@@ -1,4 +1,0 @@
-changes:
-- type: minor
-  scope: feat/developer experience,ci/cd
-  description: Add an automated bot to make PR to bump version when there's 5 of more entries.
