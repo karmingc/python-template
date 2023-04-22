@@ -42,6 +42,9 @@ jobs:
 
           git switch --create "bump/v${VERSION}"
 
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
           git add .version
           git commit -m "chore: bump version to v${VERSION}"
 
