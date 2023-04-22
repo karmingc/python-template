@@ -1,4 +1,0 @@
-changes:
-- type: patch
-  scope: fix/ci/cd
-  description: Fix the missing step id.

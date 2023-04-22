@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.2.0 (2023-04-22)
+
+
+### Minor: Backward Compatible Changes
+
+- [feat/{ci/cd,developer experience}] Add an automated bot to make PR to bump version when there's 5 of more entries.
+  [#22](https://github.com/pulumi/pulumi/pull/22)
+
+
+### Patch: Bug Fixes
+
+- [fix/ci/cd] entries folder does not exist. It's pending.
+  [#25](https://github.com/pulumi/pulumi/pull/25)
+
+- [fix/ci/cd] Fix the missing step id.
+  [#26](https://github.com/pulumi/pulumi/pull/26)
+
+- [fix/ci/cd] Missing identity for git.
+  [#27](https://github.com/pulumi/pulumi/pull/27)
+
+- [chore/docs] Add documentations about commits.
+  [#24](https://github.com/pulumi/pulumi/pull/24)
+
 ## 0.1.8 (2023-04-20)
 
 

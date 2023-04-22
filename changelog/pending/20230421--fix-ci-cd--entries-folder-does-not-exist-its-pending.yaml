@@ -1,4 +1,0 @@
-changes:
-- type: patch
-  scope: fix/ci/cd
-  description: entries folder does not exist. It's pending.

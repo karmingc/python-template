@@ -1,4 +1,0 @@
-changes:
-- type: patch
-  scope: chore/docs
-  description: Add documentations about commits.
